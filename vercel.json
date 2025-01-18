@@ -1,6 +1,6 @@
 {
   "functions": {
-    "src/seerver/yjs.ts": {
+    "src/server/yjs.ts": {
       "memory": 1024,
       "maxDuration": 10
     }
