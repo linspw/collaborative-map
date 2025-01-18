@@ -1,6 +1,6 @@
 {
   "functions": {
-    "src/server/yjs.ts": {
+    "api/yjs.js": {
       "memory": 1024,
       "maxDuration": 10
     }
