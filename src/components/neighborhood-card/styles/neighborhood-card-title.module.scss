@@ -1,0 +1,16 @@
+.neighborhood-card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.neighborhood-card-title__label {
+  background-color: aqua;
+}
+
+.neighborhood-card-title__close-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
