@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { MapContainer, Rectangle, TileLayer, useMap, useMapEvent } from 'react-leaflet';
 import { useEventHandlers } from '@react-leaflet/core';
-import { LeafletMouseEvent, Map } from 'leaflet';
+import { LeafletEventHandlerFnMap, LeafletMouseEvent, Map } from 'leaflet';
 
-// Classes used by Leaflet to position controls
 const POSITION_CLASSES = {
   bottomleft: 'leaflet-bottom leaflet-left',
   bottomright: 'leaflet-bottom leaflet-right',
@@ -14,49 +13,48 @@ const POSITION_CLASSES = {
 
 const BOUNDS_STYLE = { weight: 1 };
 
-const MinimapBounds = ({ parentMap, zoom }: { parentMap: Map; zoom: number }) => {
+const MinimapBounds = ({ parentMap, zoomOffset }: { parentMap: Map; zoomOffset: number }) => {
   const minimap = useMap();
+
+  const [bounds, setBounds] = useState(parentMap.getBounds());
 
   const onClick = useCallback(
     (e: LeafletMouseEvent) => {
-      parentMap.setView(e.latlng, parentMap.getZoom());
+      parentMap.setView(e.latlng);
     },
     [parentMap]
   );
 
-  useMapEvent('click', onClick);
-
-  const [bounds, setBounds] = useState(parentMap.getBounds());
   const onChange = useCallback(() => {
     setBounds(parentMap.getBounds());
-    minimap.setView(parentMap.getCenter(), zoom);
-  }, [minimap, parentMap, zoom]);
+    minimap.setView(parentMap.getCenter(), parentMap.getZoom() - zoomOffset);
+  }, [minimap, parentMap, zoomOffset]);
 
-  const handlers = useMemo(() => ({ move: onChange, zoom: onChange }), []);
+  const handlers: LeafletEventHandlerFnMap = useMemo(() => ({ move: onChange, zoom: onChange }), []);
+
+  useMapEvent('click', onClick);
   useEventHandlers({ instance: parentMap } as any, handlers);
+  useEffect(onChange, [onChange]);
 
   return <Rectangle bounds={bounds} pathOptions={BOUNDS_STYLE} />;
 };
 
 export const MinimapControl = ({
   position,
-  zoom,
+  zoomOffset = 0,
   style,
 }: {
   position: keyof typeof POSITION_CLASSES;
-  zoom: number;
+  zoomOffset: number;
   style: React.CSSProperties;
 }) => {
   const parentMap = useMap();
-  console.log(zoom, parentMap.getZoom());
-  const mapZoom = zoom || 0;
 
   const minimap = useMemo(
     () => (
       <MapContainer
         style={{ height: 80, width: 80 }}
         center={parentMap.getCenter()}
-        zoom={mapZoom}
         dragging={false}
         doubleClickZoom={false}
         scrollWheelZoom={false}
@@ -64,10 +62,10 @@ export const MinimapControl = ({
         zoomControl={false}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <MinimapBounds parentMap={parentMap} zoom={mapZoom} />
+        <MinimapBounds parentMap={parentMap} zoomOffset={zoomOffset} />
       </MapContainer>
     ),
-    []
+    [zoomOffset, parentMap]
   );
 
   const positionClass = (position && POSITION_CLASSES[position]) || POSITION_CLASSES.topright;
