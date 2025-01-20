@@ -78,7 +78,7 @@ export const MapRenderCollabLayer = () => {
             key={item.clientID}
             position={item.latLng}
             icon={createLeafletIcon({
-              iconUrl: generateSvgCursor('Stuart', item.color),
+              iconUrl: generateSvgCursor(item.name, item.color),
             })}
           >
             {item.name && (
