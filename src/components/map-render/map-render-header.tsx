@@ -1,11 +1,14 @@
-import { Avatar, Box, Menu, MenuItem, Tooltip, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Menu, MenuItem, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import { useSessionStore } from '@stores/use-user-store';
+import { getFirstLetters } from '@utils/names';
 import { useMemo, useState } from 'react';
 
 export const MapRenderHeader = () => {
   const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
+
   const { user, setCurrentUser } = useSessionStore();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -14,9 +17,8 @@ export const MapRenderHeader = () => {
     return user.name;
   }, [user.name]);
 
-  const firstLetter = useMemo(() => {
-    const names = user.name.split(' ');
-    return names.length > 1 ? `${names.at(0)!.at(0)}${names.at(1)!.at(0)}` : `${names.at(0)!.at(0)}`;
+  const firstLetters = useMemo(() => {
+    return getFirstLetters(user.name);
   }, [user.name]);
 
   const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {
@@ -24,6 +26,20 @@ export const MapRenderHeader = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const renderTitle = () => {
+    if (!matches) return <Typography fontWeight="bold">GeoMap</Typography>;
+
+    return (
+      <Typography fontWeight="200">
+        Welcome to GeoMap,{' '}
+        <Typography component="span" fontWeight="medium" fontStyle="italic">
+          {title}
+        </Typography>
+        !
+      </Typography>
+    );
   };
 
   return (
@@ -37,17 +53,11 @@ export const MapRenderHeader = () => {
     >
       <Container sx={{ height: '100%' }}>
         <Box display="flex" alignItems="center" height="100%" gap="4px">
-          <Typography fontWeight="200">
-            Welcome to GeoMap,{' '}
-            <Typography component="span" fontWeight="medium" fontStyle="italic">
-              {title}
-            </Typography>
-            !
-          </Typography>
+          {renderTitle()}
 
           <Tooltip title={user.name} onClick={handleClickListItem}>
             <Avatar sx={{ width: 28, height: 28, marginLeft: 'auto', backgroundColor: user.color }}>
-              {firstLetter}
+              {firstLetters}
             </Avatar>
           </Tooltip>
 

@@ -27,10 +27,12 @@ export const SignInCard = () => {
       <form className={clsx(styles['home-page-sign-in-card__form'])} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles['home-page-sign-in-card__title']}>Welcome to the GeoMap</div>
 
+        <div className={styles['home-page-sign-in-card__subtitle']}>Please enter your name</div>
+
         <TextField label="Name" variant="outlined" size="small" required {...register('name')} />
 
         <Button variant="contained" type="submit">
-          Entrar
+          Sign in
         </Button>
       </form>
     </Card>

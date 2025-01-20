@@ -6,7 +6,7 @@ export const HomePage = () => {
   const renderVideoSection = () => {
     return (
       <video className={styles['home-page__background']} autoPlay muted loop playsInline>
-        <source src="/initial_video.mp4" type="video/mp4" />
+        <source src="/initial_video.webm" type="video/webm" />
         Your browser does not support the video tag.
       </video>
     );

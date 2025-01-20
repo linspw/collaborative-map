@@ -7,6 +7,8 @@ import { LatLng } from 'leaflet';
 import type { User } from '@custom-types';
 import { useSessionStore } from '@stores/use-user-store';
 import { createLeafletIcon } from '@utils/icons/create-leaflet-icon';
+import { Avatar, AvatarGroup, Card, Tooltip, Typography } from '@mui/material';
+import { getFirstLetters } from '@utils/names';
 
 const ydoc = new Y.Doc();
 const provider = new WebrtcProvider('your-room-name', ydoc, {
@@ -67,21 +69,41 @@ export const MapRenderCollabLayer = () => {
     );
   });
 
-  return users.map((item) => {
-    return (
-      <Marker
-        key={item.clientID}
-        position={item.latLng}
-        icon={createLeafletIcon({
-          iconUrl: generateSvgCursor('Stuart', item.color),
-        })}
-      >
-        {item.name && (
-          <Popup>
-            <span>{item.name}</span>
-          </Popup>
-        )}
-      </Marker>
-    );
-  });
+  return (
+    <>
+      {users.map((item) => {
+        return (
+          <Marker
+            key={item.clientID}
+            position={item.latLng}
+            icon={createLeafletIcon({
+              iconUrl: generateSvgCursor('Stuart', item.color),
+            })}
+          >
+            {item.name && (
+              <Popup>
+                <span>{item.name}</span>
+              </Popup>
+            )}
+          </Marker>
+        );
+      })}
+
+      {users.length && (
+        <Card sx={{ padding: '24px', position: 'absolute', right: 24, bottom: 24, zIndex: 1000 }}>
+          <Typography gutterBottom>Users with you:</Typography>
+
+          <AvatarGroup max={4}>
+            {users.map((item) => {
+              return (
+                <Tooltip key={item.clientID} title={item.name}>
+                  <Avatar sx={{ backgroundColor: item.color }}>{getFirstLetters(item.name)}</Avatar>
+                </Tooltip>
+              );
+            })}
+          </AvatarGroup>
+        </Card>
+      )}
+    </>
+  );
 };
