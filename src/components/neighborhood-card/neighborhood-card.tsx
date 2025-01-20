@@ -1,40 +1,23 @@
-import { NeighborhoodListResult } from '../../types/apis/neighborhood-population';
-import { useNeighborhoodRequests } from './use-neighborhood-requests';
-import { NeighborhoodCardPopulation } from './neighborhood-card-population';
+import { NeighborhoodFeature } from '../../types/apis/neighborhood-population';
+import { NeighborhoodCardActions } from './neighborhood-card-actions';
+import { NeighborhoodCardContent } from './neighborhood-card-content';
 import { NeighborhoodCardTitle } from './neighborhood-card-title';
+import styles from './styles/neighborhood-card.module.scss';
 
 interface NeighborhoodPopulationCardProps {
-  closeCard: () => void;
-  currentNeighborhood: NeighborhoodListResult['features'][number];
+  currentNeighborhood: NeighborhoodFeature;
 }
 
 export const NeighborhoodPopulationCard = (props: NeighborhoodPopulationCardProps) => {
-  const { currentNeighborhood, closeCard } = props;
-
-  const { getNeighborhoodPopulation } = useNeighborhoodRequests();
-
-  const { data: neighborhoodPopulationData, isFetching: isGetNeighborhoodPopulationLoading } =
-    getNeighborhoodPopulation({ id: currentNeighborhood.properties.id });
-
-  const renderPopulation = () => {
-    if (isGetNeighborhoodPopulationLoading) return <div>Loadding...</div>;
-
-    return <NeighborhoodCardPopulation items={neighborhoodPopulationData} />;
-  };
+  const { currentNeighborhood } = props;
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        left: '50%',
-        right: '50%',
-        zIndex: 1000,
-        backgroundColor: 'white',
-      }}
-    >
-      <NeighborhoodCardTitle properties={currentNeighborhood.properties} onCardClose={closeCard} />
+    <div className={styles['neighborhood-card']}>
+      <NeighborhoodCardTitle properties={currentNeighborhood.properties} />
 
-      {renderPopulation()}
+      <NeighborhoodCardContent properties={currentNeighborhood.properties} />
+
+      <NeighborhoodCardActions neighborhood={currentNeighborhood} />
     </div>
   );
 };

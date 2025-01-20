@@ -28,7 +28,17 @@
       "@services/*": ["./src/services/*"],
       "@services": ["./src/services"],
       "@pages/*": ["./src/pages/*"],
-      "@pages": ["./src/pages"]
+      "@pages": ["./src/pages"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@hooks": ["./src/hooks"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@layouts": ["./src/layouts"],
+      "@custom-types/*": ["./src/types/*"],
+      "@custom-types": ["./src/types"],
+      "@stores/*": ["./src/stores/*"],
+      "@stores": ["./src/stores"],
+      "@utils/*": ["./src/utils/*"],
+      "@utils": ["./src/utils"]
     }
   },
   "include": ["src"]

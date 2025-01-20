@@ -1,9 +1,9 @@
 import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 import { MapRender } from '@components/map-render';
-import { useNeighborhoodRequests } from '@components/neighborhood-card';
-import { MapViewToolbar } from './map-view-toolbar';
+import { useNeighborhoodRequests } from '@hooks';
 import styles from './styles/map-view.module.scss';
+import { NeighborhoodInfoDrawer } from '@components/neighborhood-details-info-drawer';
 
 export const MapView = () => {
   const { getNeighborhoods } = useNeighborhoodRequests();
@@ -16,9 +16,9 @@ export const MapView = () => {
 
   return (
     <div className={styles['map-view']}>
-      <MapViewToolbar />
-
       <MapRender data={neighborhoodsData} />
+
+      <NeighborhoodInfoDrawer />
     </div>
   );
 };

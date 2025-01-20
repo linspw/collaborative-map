@@ -1,0 +1,17 @@
+.neighborhood-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.neighborhood-card-content__label {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.neighborhood-card-content__close-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

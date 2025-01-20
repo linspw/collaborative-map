@@ -30,7 +30,7 @@ const MinimapBounds = ({ parentMap, zoomOffset }: { parentMap: Map; zoomOffset: 
     minimap.setView(parentMap.getCenter(), parentMap.getZoom() - zoomOffset);
   }, [minimap, parentMap, zoomOffset]);
 
-  const handlers: LeafletEventHandlerFnMap = useMemo(() => ({ move: onChange, zoom: onChange }), []);
+  const handlers: LeafletEventHandlerFnMap = useMemo(() => ({ move: onChange, zoom: onChange }), [onChange]);
 
   useMapEvent('click', onClick);
   useEventHandlers({ instance: parentMap } as any, handlers);

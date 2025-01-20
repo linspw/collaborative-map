@@ -1,35 +1,31 @@
-import { User } from '@types'
+import { User } from '@custom-types'
 import { getSimpleRandomColor } from '@utils/colors'
-import { create, StoreApi } from 'zustand'
+import { create, } from 'zustand'
 import { persist, createJSONStorage, devtools } from 'zustand/middleware'
 
-interface UserStoreState {
+interface SessionStoreState {
   user: User
   setCurrentUser: (user: Partial<User>) => void
+  isAuthenticated: () => boolean
 }
 
-type ZustandMiddleware<T extends object> = (
-  config: (set: StoreApi<T>['setState'], get: StoreApi<T>['getState'], api: StoreApi<T>) => T
-) => (set: StoreApi<T>['setState'], get: StoreApi<T>['getState'], api: StoreApi<T>) => T;
 
-const middlewares: ZustandMiddleware<UserStoreState> = (f) =>
+const useSessionStore = create<SessionStoreState>()(
   devtools(
-    persist(f, {
+    persist((set, get) => ({
+      user: {
+        name: '',
+        clientID: 0,
+        color: getSimpleRandomColor(),
+      },
+      setCurrentUser: (user: Partial<User>) =>
+        set((state) => ({ user: { ...state.user, ...user } })),
+      isAuthenticated: () => !!get().user.name
+    }), {
       name: 'user-storage',
       storage: createJSONStorage(() => sessionStorage),
     })
   )
-
-const useUserStore = create<UserStoreState>(
-  middlewares((set) => ({
-    user: {
-      name: '',
-      clientID: 0,
-      color: getSimpleRandomColor(),
-    },
-    setCurrentUser: (user: Partial<User>) =>
-      set((state) => ({ user: { ...state.user, ...user } })),
-  }))
 )
 
-export { useUserStore }
+export { useSessionStore }
