@@ -47,6 +47,11 @@ Url:
 https://collaborative-map-ex4o.vercel.app/
 
 
+## OBS:
+O servidor colaborativo de sinalização está em uma instância gratúita do serviço Zeabur, a cada 24h ela se deleta por conta da gratúidade.
+Por favor, entrar em contato sob demanda para o servidor collaborativo retornar.
+
+
 
 ## Setup
 
