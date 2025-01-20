@@ -9,13 +9,14 @@
 
 #### Tecnologias de ecosistema:
 - Uso do [PNPM](https://pnpm.io/), mais rápido e eficiente gerenciador de módulos node.
-- Atualização das bibliotecas para sua mais recente versão.
+- Atualização das bibliotecas para sua versão mais recente versão.
 - Adição de Typescript ao projeto.
 - Update para nova versão do eslint 9.
+- Adicionando formatador prettier.
 
 #### Tecnologias de infraesturutra:
-- Hospedagem Free na Vercel
-- Uso Zeabur para hospedar servidor simples colaborativo de sinalização
+- Hospedagem Free na Vercel.
+- Uso Zeabur para hospedar servidor simples colaborativo de sinalização.
 - Uso de um servidor websockets simples para colaboração por WebRTC.
 
 #### Bibliotecas:
@@ -29,14 +30,14 @@
 
 
 #### Features:
-- Paginação com React Router
-- Visualização de Bairros
-- Colaboração em tempo real (cursor com usuários online)
+- Paginação com React Router.
+- Visualização de Bairros.
+- Colaboração em tempo real (cursor com usuários online).
 - Minimap com atualização de zoom seguindo o mapa principal.
-- Gráfico mostrando evolução da população
+- Gráfico mostrando evolução da população.
 - Pesquisar na Web.
 - Uso de layers nas features.
-- Fallback em caso de não haver User Name (simulação de autenticação apesar de ser no client.)
+- Fallback em caso de não haver User Name (simulação de autenticação apesar de ser no client).
 - Validação de formulários com Zod.
 - Uso de Typescript em diferentes layers (app e node).
 
@@ -50,7 +51,6 @@ https://collaborative-map-ex4o.vercel.app/
 ## OBS:
 O servidor colaborativo de sinalização está em uma instância gratúita do serviço Zeabur, a cada 24h ela se deleta por conta da gratúidade.
 Por favor, entrar em contato sob demanda para o servidor collaborativo retornar.
-
 
 
 ## Setup
