@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from 'react';
 import { Marker, Popup, useMapEvent } from 'react-leaflet';
 import * as Y from 'yjs';
